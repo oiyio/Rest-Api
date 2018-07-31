@@ -8,7 +8,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/Tutorial1-Basics" />
+            <option value="$PROJECT_DIR$/Tutorial1-1GET-Request" />
+            <option value="$PROJECT_DIR$/Tutorial1-2POST-Request" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
