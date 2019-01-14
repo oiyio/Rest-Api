@@ -8,8 +8,11 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/Tutorial1-1GET-Request" />
-            <option value="$PROJECT_DIR$/Tutorial1-2POST-Request" />
+            <option value="$PROJECT_DIR$/ExternalTutorial-RetrofitIntro" />
+            <option value="$PROJECT_DIR$/Tutorial1-1GET-Request-Path" />
+            <option value="$PROJECT_DIR$/Tutorial1-2GET-Request-Query" />
+            <option value="$PROJECT_DIR$/Tutorial1-3-Request-QueryMapAndUrl" />
+            <option value="$PROJECT_DIR$/Tutorial2-1POST-Request" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
