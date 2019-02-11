@@ -32,7 +32,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private static final String BASE_URL = "httpss:/api.github.com/";
+    private static final String BASE_URL = "https:/api.github.com/";
     private String query = "SmartToolFactory";
 
     @Override
@@ -49,15 +49,18 @@ public class MainActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+
+        Request request;
+
         // Create GitHubClient
         GitHubClient gitHubClient = retrofit.create(GitHubClient.class);
 
         // Send a request to retrieve GithubRepo object and assign this objects to listView
-        //requestRepos(listView, gitHubClient);
+        requestRepos(listView, gitHubClient);
 
 
         // OPTIONAL query that returns ResponseBody
-        requestReposRaw(gitHubClient);
+        // requestReposRaw(gitHubClient);
 
     }
 

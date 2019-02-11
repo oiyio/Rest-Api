@@ -1,24 +1,23 @@
 package com.test.tutorial1_get_request_query;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.test.tutorial1_get_request_query.adapter.AnswersAdapter;
 import com.test.tutorial1_get_request_query.api.ApiUtils;
 import com.test.tutorial1_get_request_query.api.SOAnswersResponse;
 import com.test.tutorial1_get_request_query.api.SOService;
+import com.test.tutorial1_get_request_query.calladapter.ApiResponse;
 import com.test.tutorial1_get_request_query.model.Item;
 
 import java.util.ArrayList;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * This example demonstrates how to retrieve data in {@link SOAnswersResponse}
@@ -38,8 +37,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mService = ApiUtils.getSOService();
 
+        // TODO choose Call or LiveData returning Service api
+        // mService = ApiUtils.getSOService();
+        mService = ApiUtils.getLiveDataSOService();
         bindViews();
 
     }
@@ -68,23 +69,39 @@ public class MainActivity extends AppCompatActivity {
     public void loadAnswers(String tag) {
 
 
-        mService.getAnswers(tag).enqueue(new Callback<SOAnswersResponse>() {
+//        mService.getAnswers(tag).enqueue(new Callback<SOAnswersResponse>() {
+//
+//            @Override
+//            public void onResponse(Call<SOAnswersResponse> call, Response<SOAnswersResponse> response) {
+//
+//                if (response.isSuccessful()) {
+//                    mAdapter.updateAnswers(response.body().getItems());
+//                    Log.d("MainActivity", "posts loaded from API");
+//                } else {
+//                    int statusCode = response.code();
+//                    // handle request errors depending on status code
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<SOAnswersResponse> call, Throwable t) {
+//                Log.d("MainActivity", "error loading from API");
+//            }
+//        });
 
+
+        LiveData<ApiResponse<SOAnswersResponse>> soAnswersResponseLiveData = mService.getAnswersLive(tag);
+
+        System.out.println("MainActivity() loadAnswers() soAnswersResponseLiveData: " + soAnswersResponseLiveData.getValue());
+
+        soAnswersResponseLiveData.observe(this, new Observer<ApiResponse<SOAnswersResponse>>() {
             @Override
-            public void onResponse(Call<SOAnswersResponse> call, Response<SOAnswersResponse> response) {
+            public void onChanged(@Nullable ApiResponse<SOAnswersResponse> soAnswersResponseApiResponse) {
+                if (soAnswersResponseApiResponse != null && soAnswersResponseApiResponse.body != null) {
+                    System.out.println("MainActivity() loadAnswers() observe() THREAD:  " + Thread.currentThread().getName() );
 
-                if (response.isSuccessful()) {
-                    mAdapter.updateAnswers(response.body().getItems());
-                    Log.d("MainActivity", "posts loaded from API");
-                } else {
-                    int statusCode = response.code();
-                    // handle request errors depending on status code
+                    mAdapter.updateAnswers(soAnswersResponseApiResponse.body.getItems());
                 }
-            }
-
-            @Override
-            public void onFailure(Call<SOAnswersResponse> call, Throwable t) {
-                Log.d("MainActivity", "error loading from API");
             }
         });
     }

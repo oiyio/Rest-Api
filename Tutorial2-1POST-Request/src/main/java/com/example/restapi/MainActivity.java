@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
                 String body = bodyEt.getText().toString().trim();
                 if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(body)) {
                     sendPost(title, body);
+                    // TODO Send twice to test calls
+                    sendPost(title, body);
                 }
             }
         });
