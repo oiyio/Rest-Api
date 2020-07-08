@@ -1,14 +1,10 @@
 package com.journaldev.retrofitintro;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.journaldev.retrofitintro.pojo.CreateUserResponse;
-import com.journaldev.retrofitintro.pojo.MultipleResource;
-import com.journaldev.retrofitintro.pojo.User;
 import com.journaldev.retrofitintro.pojo.UserList;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.test.tutorial1_get_request_query.api;
 
-import android.arch.lifecycle.LiveData;
+import androidx.lifecycle.LiveData;
 
 import com.test.tutorial1_get_request_query.calladapter.ApiResponse;
 

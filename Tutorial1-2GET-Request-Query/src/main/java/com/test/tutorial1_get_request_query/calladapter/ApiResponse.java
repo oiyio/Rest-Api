@@ -16,7 +16,7 @@
 
 package com.test.tutorial1_get_request_query.calladapter;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import java.io.IOException;
 

@@ -16,7 +16,7 @@
 
 package com.test.tutorial1_get_request_query.calladapter;
 
-import android.arch.lifecycle.LiveData;
+import androidx.lifecycle.LiveData;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;

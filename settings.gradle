@@ -1,2 +1,4 @@
+include ':externaltutorial-codinginflow-2-url-manipulation'
+include ':ExternalTutorial-codinginflow-1-simple-get-request'
 include ':Tutorial1-1GET-Request-Path', ':Tutorial1-2GET-Request-Query', ':Tutorial1-3-Request-QueryMapAndUrl', ':ExternalTutorial-RetrofitIntro'
 include ':Tutorial2-1POST-Request'

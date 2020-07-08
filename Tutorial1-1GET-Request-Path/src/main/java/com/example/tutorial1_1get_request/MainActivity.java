@@ -1,7 +1,7 @@
 package com.example.tutorial1_1get_request;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -33,14 +33,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity {
 
     private static final String BASE_URL = "https:/api.github.com/";
-    private String query = "SmartToolFactory";
+    private static final String USERNAME = "SmartToolFactory";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final ListView listView = findViewById(R.id.pagination_list);
+        final ListView listView = findViewById(R.id.listView);
 
         // Create Retrofit instance with builder pattern
         Retrofit retrofit = new Retrofit
@@ -49,51 +49,19 @@ public class MainActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-
-        Request request;
-
-        // Create GitHubClient
         GitHubClient gitHubClient = retrofit.create(GitHubClient.class);
 
         // Send a request to retrieve GithubRepo object and assign this objects to listView
         requestRepos(listView, gitHubClient);
-
 
         // OPTIONAL query that returns ResponseBody
         // requestReposRaw(gitHubClient);
 
     }
 
-    private void requestReposRaw(GitHubClient gitHubClient) {
-        Call<ResponseBody> callRaw = gitHubClient.responseUsers(query);
-
-        callRaw.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
-                try {
-
-                    // Get response message in String format
-                    String rawResponse = response.body().string();
-                    System.out.println("Response RAW: " + rawResponse);
-
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                response.body().close();
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-            }
-        });
-    }
-
     private void requestRepos(ListView listView, GitHubClient gitHubClient) {
         // Create call to execute network process
-        Call<List<GitHubRepo>> call = gitHubClient.repoForUser(query);
+        Call<List<GitHubRepo>> call = gitHubClient.repoForUser(USERNAME);
 
         // Send request asynchronously and get response or error
         call.enqueue(new Callback<List<GitHubRepo>>() {
@@ -126,6 +94,33 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<GitHubRepo>> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void requestReposRaw(GitHubClient gitHubClient) {
+        Call<ResponseBody> callRaw = gitHubClient.responseUsers(USERNAME);
+
+        callRaw.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                try {
+
+                    // Get response message in String format
+                    String rawResponse = response.body().string();
+                    System.out.println("Response RAW: " + rawResponse);
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                response.body().close();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
             }
         });
     }
